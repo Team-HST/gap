@@ -5,3 +5,7 @@
 Gaze Analysis Program
 ```
 
+## 기술스택
+```
+Frontend: Vue.js
+```
