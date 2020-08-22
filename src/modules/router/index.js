@@ -6,7 +6,7 @@ Vue.use(Router);
 const router = new Router({
     mode: 'history',
     routes: paths.map((path) => {
-        return route(route.path, path.component, path.name)
+        return route(path.path, path.component, path.name)
     })
 })
 
