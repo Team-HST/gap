@@ -23,12 +23,15 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'MainView',
   data: () => ({
     isSelecting: false
   }),
   methods: {
+    ...mapMutations(['setData']),
     onButtonClick() {
       this.isSelecting = true;
       window.addEventListener('focus', () => {
@@ -65,9 +68,9 @@ export default {
     },
     afterAnalyze(result) {
       console.log('after analyze');
+      this.setData(result);
       this.$router.push({
         name: 'VisualizerView', 
-        params: { data: result }
       });
     }
   }

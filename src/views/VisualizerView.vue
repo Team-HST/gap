@@ -3,7 +3,7 @@
     class="mt-16 text-center"
   >
     <HeatMap 
-      :data="(data) ? data : []"
+      :data="(this.getData) ? this.getData: []"
       :options="options"
     />
     <v-btn
@@ -18,13 +18,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import HeatMap from '../components/HeatMap';
-// import HelloWorld from '../components/HelloWorld';
 
 export default {
   components: {
     HeatMap
-    // HelloWorld
   },
   props: {
     data: Array,
@@ -34,6 +33,9 @@ export default {
       backgroundColor: "#FBFBEF"
     }
   }),
+  computed: {
+    ...mapGetters(['getData'])
+  },
   methods: {
     onImgDownButtonClick: () => {
       alert('이미지 다운로드');

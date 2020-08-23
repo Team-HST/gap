@@ -1,6 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar
+      class="header-title"
+      app color="primary" dark
+      @click="onMoveHomeClick"
+    >
       <h3>Gaze Analysis Program</h3>
     </v-app-bar>
     <v-main>
@@ -12,7 +16,24 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
-  name: 'App'  
+  name: 'App',
+  methods: {
+    ...mapMutations(['setData']),
+    onMoveHomeClick() {
+      if (this.$router.history.current.name !== 'MainView') {
+        this.setData([]);
+        this.$router.push({name: 'MainView'});
+      }
+    }
+  }
 };
 </script>
+
+<style scoped>
+  .header-title {
+    cursor: pointer;
+  }
+</style>
