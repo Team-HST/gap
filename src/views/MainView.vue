@@ -54,7 +54,7 @@ export default {
           let gaData = JSON.parse(data);
           let pos = gaData['gp'];
           if (pos) {
-            result.push({x: pos[0], y: pos[1], v: 1});
+            result.push({x: pos[0] * 800, y: pos[1] * 600, v: 1});
           }
         } catch (err) {
           // ignore
@@ -67,7 +67,7 @@ export default {
       console.log('after analyze');
       this.$router.push({
         name: 'VisualizerView', 
-        params: { source: result }
+        params: { data: result }
       });
     }
   }
