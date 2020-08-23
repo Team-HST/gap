@@ -100,7 +100,7 @@ export default {
           // ignore
         }
       }
-      setTimeout(this.afterAnalyze(result), 3000);
+      this.afterAnalyze(result);
     },
     afterAnalyze(result) {
       console.log('after analyze');
