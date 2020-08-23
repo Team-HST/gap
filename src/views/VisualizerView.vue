@@ -1,19 +1,34 @@
 <template>
   <div
-    class="mt-16 text-center"
+    class="analysisArea text-center"
   >
     <HeatMap 
       :data="(this.getData) ? this.getData: []"
       :options="options"
     />
-    <v-btn
-      color="primary"
-      class="text-none"
-      @click="onImgDownButtonClick"
-    >
-      <v-icon left>mdi-download</v-icon>
-      분석결과 이미지 다운로드
-    </v-btn>
+    <v-row>
+      <v-col cols="2"></v-col>
+      <v-col cols="8">
+        <v-btn
+          color="white"
+          class="text-none ml-10"
+          to="/" large
+        >
+        <v-icon left>mdi-backspace</v-icon>
+        뒤로가기
+        </v-btn>
+        <v-btn
+          color="primary"
+          class="text-none ml-5"
+          @click="onImgDownButtonClick"
+          style="color: white;" large
+        >
+        <v-icon left>mdi-download</v-icon>
+        분석결과 이미지 다운로드
+        </v-btn>
+      </v-col>
+      <v-col cols="2"></v-col>
+    </v-row>
   </div>
 </template>
 
@@ -45,5 +60,7 @@ export default {
 </script>
 
 <style>
-
+div.analysisArea {
+  margin-top: 7.5%;
+}
 </style>

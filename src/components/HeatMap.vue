@@ -21,8 +21,8 @@
         flat
         tile
       >
-        <span>min</span>
-        <span>max</span>
+        <span class="min pl-1">min</span>
+        <span class="max pr-1">max</span>
       </v-card>
     </v-card>
   </div>
@@ -55,5 +55,9 @@ export default {
     height: 20px;
     background-image:linear-gradient(50deg,#A9A9F5, lightgreen,yellow, red);
     white-space: pre;
+  }
+
+  span.min, span.max{
+    font-weight: 700;
   }
 </style>
