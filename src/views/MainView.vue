@@ -10,40 +10,42 @@
           >
         </v-progress-circular>
       </v-row>
-      <v-row id="contentArea" align="center" justify="center">
-          <v-card
-            class="mx-auto cardRow"
-            max-width="400"
-            height="200"
+      <v-row 
+        id="contentArea"
+        class="mt-16"
+        align="center" 
+        justify="center">
+          <v-col
+            class="mt-16"
+            cols="12"
+            sm="8"
+            md="4"
           >
             <v-img
-              class="white--text align-end mt-2"
-              height="100px" width="100px"
-              src="@/assets/json.png"
+              class="white--text align-end mt-16"
+              width="320px" height="180px"
+              src="@/assets/logo.png"
             >
             </v-img>
-            <v-card-actions>
-              <v-col cols="12">
-                <v-btn
-                  color="primary"
-                  class="text-none"
-                  rounded
-                  depressed
-                  :loading="isSelecting"
-                  @click="onButtonClick"
-                >
-                  <v-icon left>mdi-cloud-upload</v-icon>
-                  분석 파일 선택
-                </v-btn>
-                <input
-                  ref="uploader"
-                  class="d-none"
-                  type="file"
-                  @change="onFileChanged"
-                >
-              </v-col>
-            </v-card-actions>
-          </v-card>
+            <v-btn
+              class="mt-16 white--text"
+              color="grey darken-1"
+              rounded
+              depressed
+              large
+              :loading="isSelecting"
+              @click="onButtonClick"
+            >
+              <v-icon left>mdi-cloud-upload</v-icon>
+              분석 파일 선택 (.json)
+            </v-btn>
+            <input
+              ref="uploader"
+              class="d-none"
+              type="file"
+              @change="onFileChanged"
+            >
+          </v-col>
       </v-row>
       <!--
       <v-row align="center">
@@ -80,7 +82,6 @@ export default {
     },
     beforeAnalyze() {
       console.log('before analyze');
-      document.querySelector(".v-main__wrap").style.opacity="0.5";
       document.getElementById("contentArea").style.display = "none";
       document.getElementById("spinnerArea").style.display = "block";
     },
@@ -104,7 +105,6 @@ export default {
     },
     afterAnalyze(result) {
       console.log('after analyze');
-      document.querySelector(".v-main__wrap").style.opacity="1.0";
       document.getElementById("contentArea").style.display = "block";
       document.getElementById("spinnerArea").style.display = "none";
       this.setData(result);
@@ -128,13 +128,6 @@ div.cardRow {
 div.important {
   color: red;
   font-weight: 600;
-}
-
-div.v-main__wrap {
-  overflow: hidden;
-  background-image: url("../assets/eyeTracker.png");
-  background-size: 1900px 850px;
-  height: 850px;
 }
 
 .text-none {

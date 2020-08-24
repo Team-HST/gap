@@ -2,26 +2,32 @@
   <div
     class="analysisArea text-center"
   >
-    <HeatMap 
-      :data="(this.getData) ? this.getData: []"
-      :options="options"
-    />
+    <div ref="heatMap">
+      <HeatMap
+        :data="(this.getData) ? this.getData: []"
+        :options="options"
+      />
+    </div>
     <v-row>
       <v-col cols="2"></v-col>
       <v-col cols="8">
         <v-btn
-          color="white"
           class="text-none ml-10"
-          to="/" large
+          color="white"
+          rounded
+          large
+          to="/" 
         >
         <v-icon left>mdi-backspace</v-icon>
-        뒤로가기
+          뒤로가기
         </v-btn>
         <v-btn
-          color="primary"
-          class="text-none ml-5"
+          class="ml-5 white--text"
+          color="grey darken-1"
+          rounded
+          depressed
+          large
           @click="onImgDownButtonClick"
-          style="color: white;" large
         >
         <v-icon left>mdi-download</v-icon>
         분석결과 이미지 다운로드
@@ -52,8 +58,40 @@ export default {
     ...mapGetters(['getData'])
   },
   methods: {
-    onImgDownButtonClick: () => {
-      alert('이미지 다운로드');
+    async onImgDownButtonClick() {
+      const el = this.$refs['heatMap'];
+      const options = {
+        type: 'dataURL'
+      }
+      // VueHtml2Canvas를 이용한 base64생성
+      const output = await this.$html2canvas(el, options);
+      const byteString = atob(output.split(',')[1]);
+
+      // Bolb 타입 데이터를 만들이기위한 데이터생성
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      // 파일저장이름
+      // let filename = `${this.getAnalysisData[0].fileName.replace(/:/g, '')} 외 ${this.getAnalysisData.length-1}_(${this.getAnalysisData[0].indicatorName}_`+
+      //                `${this.getAnalysisData[0].crossRoadNumber}).png`;
+
+
+      let filename = `heatMap_${this.$moment().format('YYYY-MM-DD hh:mm:ss')}.png`;
+
+      // Blob 생성
+      let bolb = new Blob([ab], { type: 'image/png' });
+              
+      // ie
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(bolb, filename);
+      } else { // chrome
+        let link = document.createElement('a');
+        link.href = window.URL.createObjectURL(bolb);
+        link.download = filename;
+        link.click();
+      }
     }
   }
 }
