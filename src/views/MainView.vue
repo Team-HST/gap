@@ -1,11 +1,10 @@
 <template>
   <div class="reponsive">
     <v-responsive :aspect-ratio="16/9" align="center">
-      <v-row ref="spinnerArea" align="center" justify="center" style="margin-top: 20%; display:none; position: relative;">
-        <ring-loader :loading="loading" :color="color" :size="size"></ring-loader>
-      </v-row>
+      <div class="spiner-area">
+        <RingLoader :loading="loading" :color="color" :size="size"></RingLoader>
+      </div>
       <v-row 
-        ref="contentArea"
         class="mt-16"
         align="center" 
         justify="center">
@@ -59,11 +58,11 @@ import RingLoader from 'vue-spinner/src/RingLoader.vue';
 export default {
   name: 'MainView',
   components: {
-    'RingLoader' : RingLoader
+    RingLoader
   },
   data: () => ({
     isSelecting: false,
-    loading: true,
+    loading: false,
     color: '#00ffcc',
     size: '150px',
     margin: '2px',
@@ -85,10 +84,8 @@ export default {
     },
     beforeAnalyze() {
       console.log('before analyze');
-      
-      document.getElementById("layoutMain").style.filter = "brightness(60%)";
-      this.$refs.contentArea.style.display = "none";
-      this.$refs.spinnerArea.style.display = "block";
+      document.getElementsByClassName("black-overlay")[0].style.display = "block";
+      this.loading = true
     },
     analyze(text) {
       this.beforeAnalyze();
@@ -106,13 +103,15 @@ export default {
           // ignore
         }
       }
-      // this.afterAnalyze(result);
+
+      setTimeout(() => {
+        this.afterAnalyze(result);
+      }, 1000)
     },
     afterAnalyze(result) {
       console.log('after analyze');
-      this.$refs.contentArea.style.display = "block";
-      this.$refs.spinnerArea.style.display = "none";
-      document.getElementById("layoutMain").style.filter = "brightness(100%)";
+      this.loading = false;
+      document.getElementsByClassName("black-overlay")[0].style.display = "none";
       this.setData(result);
       this.$router.push({
         name: 'VisualizerView', 
@@ -143,5 +142,26 @@ div.important {
 
 .progress-circular {
   margin: 1rem;
+}
+
+.black-overlay {
+  display: none;
+	position: fixed;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index:1001;
+	-moz-opacity: 0.8;
+	opacity:.80;
+	filter: alpha(opacity=80);
+}
+
+.spiner-area {
+  position: fixed;
+  z-index: 1003;
+  top: 30%;
+  left: 45%;
 }
 </style>
