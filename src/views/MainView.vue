@@ -1,17 +1,11 @@
 <template>
   <div class="reponsive">
     <v-responsive :aspect-ratio="16/9" align="center">
-      <v-row id="spinnerArea" align="center" justify="center" style="margin-top: 20%; display: none; position: relative;">
-        <v-progress-circular
-          :size="100"
-          :width="15"
-          :rotate="360"
-          color="teal"
-          >
-        </v-progress-circular>
+      <v-row ref="spinnerArea" align="center" justify="center" style="margin-top: 20%; display:none; position: relative;">
+        <pacman-loader :loading="loading" :color="color" :size="size" style="text-align: center;"></pacman-loader>
       </v-row>
       <v-row 
-        id="contentArea"
+        ref="contentArea"
         class="mt-16"
         align="center" 
         justify="center">
@@ -60,11 +54,20 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue';
 
 export default {
   name: 'MainView',
+  components: {
+    'PacmanLoader' : PacmanLoader
+  },
   data: () => ({
-    isSelecting: false
+    isSelecting: false,
+    loading: true,
+    color: '#00ffcc',
+    size: '50px',
+    margin: '2px',
+    radius: '100%'
   }),
   methods: {
     ...mapMutations(['setData']),
@@ -82,8 +85,9 @@ export default {
     },
     beforeAnalyze() {
       console.log('before analyze');
-      document.getElementById("contentArea").style.display = "none";
-      document.getElementById("spinnerArea").style.display = "block";
+      
+      this.$refs.contentArea.style.display = "none";
+      this.$refs.spinnerArea.style.display = "block";
     },
     analyze(text) {
       this.beforeAnalyze();
@@ -101,16 +105,59 @@ export default {
           // ignore
         }
       }
-      this.afterAnalyze(result);
+      // setTimeout(this.afterAnalyze(result), 5000);
     },
     afterAnalyze(result) {
       console.log('after analyze');
-      document.getElementById("contentArea").style.display = "block";
-      document.getElementById("spinnerArea").style.display = "none";
+      this.$refs.getElementById("contentArea").style.display = "block";
+      this.$refs.getElementById("spinnerArea").style.display = "none";
       this.setData(result);
       this.$router.push({
         name: 'VisualizerView', 
       });
+    }
+  },
+  computed: {
+    spinnerStyle () {
+      return {
+        backgroundColor: this.color,
+        width: this.size,
+        height: this.size,
+        margin: this.margin,
+        borderRadius: this.radius,
+      }
+    },
+    border1 () {
+      return this.size + ' solid transparent'
+    },
+    border2 () {
+      return this.size + ' solid ' + this.color
+    },
+    spinnerStyle1 () {
+      return {
+        width: 0,
+        height: 0,
+        borderTop: this.border2,
+        borderRight: this.border1,
+        borderBottom: this.border2,
+        borderLeft: this.border2,
+        borderRadius: this.size
+      }
+    },
+    animationStyle () {
+      return {
+        width: '10px',
+        height: '10px',
+        transform: 'translate(0, '+ -parseFloat(this.size)/4 + 'px)',
+        position: 'absolute',
+        top: '25px',
+        left: '100px',
+        animationName: 'v-pacmanStretchDelay',
+        animationDuration: '1s',
+        animationIterationCount: 'infinite',
+        animationTimingFunction: 'linear',
+        animationFillMode: 'both'
+      }
     }
   }
 }
