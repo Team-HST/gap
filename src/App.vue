@@ -7,7 +7,7 @@
     >
       <h3>Gaze Analysis Program</h3>
     </v-app-bar> -->
-    <v-main class="layout-main">
+    <v-main class="layout-main" id="layoutMain">
       <v-container>
         <router-view />
       </v-container>

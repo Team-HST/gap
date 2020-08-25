@@ -2,7 +2,7 @@
   <div class="reponsive">
     <v-responsive :aspect-ratio="16/9" align="center">
       <v-row ref="spinnerArea" align="center" justify="center" style="margin-top: 20%; display:none; position: relative;">
-        <pacman-loader :loading="loading" :color="color" :size="size" style="text-align: center;"></pacman-loader>
+        <ring-loader :loading="loading" :color="color" :size="size"></ring-loader>
       </v-row>
       <v-row 
         ref="contentArea"
@@ -54,18 +54,18 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import PacmanLoader from 'vue-spinner/src/PacmanLoader.vue';
+import RingLoader from 'vue-spinner/src/RingLoader.vue';
 
 export default {
   name: 'MainView',
   components: {
-    'PacmanLoader' : PacmanLoader
+    'RingLoader' : RingLoader
   },
   data: () => ({
     isSelecting: false,
     loading: true,
     color: '#00ffcc',
-    size: '50px',
+    size: '150px',
     margin: '2px',
     radius: '100%'
   }),
@@ -86,6 +86,7 @@ export default {
     beforeAnalyze() {
       console.log('before analyze');
       
+      document.getElementById("layoutMain").style.filter = "brightness(60%)";
       this.$refs.contentArea.style.display = "none";
       this.$refs.spinnerArea.style.display = "block";
     },
@@ -105,59 +106,17 @@ export default {
           // ignore
         }
       }
-      // setTimeout(this.afterAnalyze(result), 5000);
+      // this.afterAnalyze(result);
     },
     afterAnalyze(result) {
       console.log('after analyze');
-      this.$refs.getElementById("contentArea").style.display = "block";
-      this.$refs.getElementById("spinnerArea").style.display = "none";
+      this.$refs.contentArea.style.display = "block";
+      this.$refs.spinnerArea.style.display = "none";
+      document.getElementById("layoutMain").style.filter = "brightness(100%)";
       this.setData(result);
       this.$router.push({
         name: 'VisualizerView', 
       });
-    }
-  },
-  computed: {
-    spinnerStyle () {
-      return {
-        backgroundColor: this.color,
-        width: this.size,
-        height: this.size,
-        margin: this.margin,
-        borderRadius: this.radius,
-      }
-    },
-    border1 () {
-      return this.size + ' solid transparent'
-    },
-    border2 () {
-      return this.size + ' solid ' + this.color
-    },
-    spinnerStyle1 () {
-      return {
-        width: 0,
-        height: 0,
-        borderTop: this.border2,
-        borderRight: this.border1,
-        borderBottom: this.border2,
-        borderLeft: this.border2,
-        borderRadius: this.size
-      }
-    },
-    animationStyle () {
-      return {
-        width: '10px',
-        height: '10px',
-        transform: 'translate(0, '+ -parseFloat(this.size)/4 + 'px)',
-        position: 'absolute',
-        top: '25px',
-        left: '100px',
-        animationName: 'v-pacmanStretchDelay',
-        animationDuration: '1s',
-        animationIterationCount: 'infinite',
-        animationTimingFunction: 'linear',
-        animationFillMode: 'both'
-      }
     }
   }
 }
