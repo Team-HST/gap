@@ -92,18 +92,23 @@ export default {
 
       const result = [];
       const dataList = text.split('\n');
+      //let tsMaxVal = 0;
+      //let tsMinVal = 0;
       for (let data of dataList) {
         try {
           let gaData = JSON.parse(data);
           let pos = gaData['gp'];
-          if (pos) {
-            result.push({x: pos[0] * 800, y: pos[1] * 600, v: 1});
+          let ts = gaData['ts']; 
+          
+          if (pos && ts) {
+            result.push({ts: ts / 1000000, x: pos[0] * 800, y: pos[1] * 600, value: 1});
           }
+          
         } catch (err) {
           // ignore
         }
       }
-
+      console.log('result: ' + JSON.stringify(result));
       setTimeout(() => {
         this.afterAnalyze(result);
       }, 1000)

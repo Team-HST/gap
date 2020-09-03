@@ -11,6 +11,12 @@
     <v-row>
       <v-col cols="2"></v-col>
       <v-col cols="8">
+        <vue-slider v-model="value" :process="processOptions" />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="2"></v-col>
+      <v-col cols="8">
         <v-btn
           class="text-none ml-10"
           color="white"
@@ -41,10 +47,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import HeatMap from '../components/HeatMap';
+import VueSlider from 'vue-slider-component';
+import 'vue-slider-component/theme/antd.css';
 
 export default {
   components: {
-    HeatMap
+    HeatMap,
+    VueSlider
   },
   props: {
     data: Array,
@@ -52,7 +61,11 @@ export default {
   data: () => ({
     options: {
       backgroundColor: "#FBFBEF"
-    }
+    },
+    value: [0, 50],
+    processOptions: dotsPos => [
+          [dotsPos[0], dotsPos[1], { backgroundColor: '#00FF70' }],
+    ]
   }),
   computed: {
     ...mapGetters(['getData'])
