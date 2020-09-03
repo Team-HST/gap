@@ -11,9 +11,10 @@
     <v-row>
       <v-col cols="2"></v-col>
       <v-col cols="8">
-        <vue-slider v-model="value" :process="processOptions" />
+        <VueSlider v-model="value" :process="processOptions" @drag-end="onChangeSlider" />
       </v-col>
     </v-row>
+    <ScatterChart />
     <v-row>
       <v-col cols="2"></v-col>
       <v-col cols="8">
@@ -30,7 +31,6 @@
         <v-btn
           class="ml-5 white--text"
           color="grey darken-1"
-          rounded
           depressed
           large
           @click="onImgDownButtonClick"
@@ -47,13 +47,15 @@
 <script>
 import { mapGetters } from 'vuex';
 import HeatMap from '../components/HeatMap';
+import ScatterChart from '../components/ScatterChart';
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/antd.css';
 
 export default {
   components: {
     HeatMap,
-    VueSlider
+    VueSlider,
+    ScatterChart
   },
   props: {
     data: Array,
@@ -62,10 +64,10 @@ export default {
     options: {
       backgroundColor: "#FBFBEF"
     },
-    value: [0, 50],
     processOptions: dotsPos => [
-          [dotsPos[0], dotsPos[1], { backgroundColor: '#00FF70' }],
-    ]
+      [dotsPos[0], dotsPos[1], { backgroundColor: '#00FF70' }],
+    ],
+    value: [0, 100]
   }),
   computed: {
     ...mapGetters(['getData'])
@@ -105,6 +107,13 @@ export default {
         link.download = filename;
         link.click();
       }
+    },
+
+  /**
+   * @todo 변경 판단 후 차트 렌더링
+   */
+    onChangeSlider() {
+      console.log(this.value);
     }
   }
 }
