@@ -14,6 +14,9 @@ export default new Vuex.Store({
   getters: {
     getData: (state) => {
       return state.data;
+    },
+    getDataWithTimeRange: (state) => (min) => {
+      return state.data[min];
     }
   },
   mutations: {
