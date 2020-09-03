@@ -92,26 +92,33 @@ export default {
 
       const result = [];
       const dataList = text.split('\n');
-      //let tsMaxVal = 0;
-      //let tsMinVal = 0;
+      let normalizer;
       for (let data of dataList) {
         try {
           let gaData = JSON.parse(data);
           let pos = gaData['gp'];
           let ts = gaData['ts']; 
-          
-          if (pos && ts) {
-            result.push({ts: ts / 1000000, x: pos[0] * 800, y: pos[1] * 600, value: 1});
+          if (!normalizer) {
+            normalizer = ts;
           }
-          
+          if (pos && ts) {
+            const viewData = {ts, x: pos[0], y: pos[1], value: 1};
+            this.normalizeTimestamp(viewData, normalizer);
+            result.push(viewData);
+          }
         } catch (err) {
           // ignore
         }
       }
+      // result = result.sort((a, b) => a.ts - b.ts);
+      
       console.log('result: ' + JSON.stringify(result));
       setTimeout(() => {
         this.afterAnalyze(result);
       }, 1000)
+    },
+    normalizeTimestamp(data, normalizer) {      
+      data.ts = Math.ceil((data.ts - normalizer) / 1000000);
     },
     afterAnalyze(result) {
       console.log('after analyze');
