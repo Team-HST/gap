@@ -68,7 +68,12 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters(['getData'])
+    ...mapGetters(['getData', 'getDataWithTimeRange'])
+  },
+  created() {
+    console.log(this.getDataWithTimeRange(0, 5, data => ({x: data.x, y: data.y})));
+    console.log(this.getDataWithTimeRange(1, 2, data => data.ts));
+    console.log(this.getDataWithTimeRange(25, 100, data => ([data.x, data.y])));
   },
   methods: {
     async onImgDownButtonClick() {

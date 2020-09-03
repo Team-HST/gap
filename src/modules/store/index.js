@@ -15,8 +15,14 @@ export default new Vuex.Store({
     getData: (state) => {
       return state.data;
     },
-    getDataWithTimeRange: (state) => (min) => {
-      return state.data[min];
+    getDataWithTimeRange: (state) => (min, max, mapper) => {
+      const result = [];
+      for (let row of state.data) {
+        if (row.ts >= min && row.ts <= max) {
+          result.push(mapper ? mapper(row) : row);
+        }
+      } 
+      return result;
     }
   },
   mutations: {
