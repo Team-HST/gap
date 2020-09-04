@@ -34,7 +34,7 @@ export default new Vuex.Store({
       for (let row of getters.getTsRangeData(min, max)) {
         let xIdx = Math.max(0, Math.ceil(row.x / 0.25) - 1); 
         let yIdx = Math.max(0, Math.ceil(row.y / 0.25) - 1);
-        result[xIdx][yIdx] = parseInt(result[xIdx][yIdx]) + 1;
+        result[xIdx][yIdx] = result[xIdx][yIdx] + 1;
       }
       return result;
     }
