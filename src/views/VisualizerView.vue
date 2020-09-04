@@ -70,12 +70,13 @@ export default {
     value: [0, 100]
   }),
   computed: {
-    ...mapGetters(['getData', 'getDataWithTimeRange'])
+    ...mapGetters(['getData', 'getTsRangeData', 'get16DivideData'])
   },
   created() {
-    console.log(this.getDataWithTimeRange(0, 5, data => ({x: data.x, y: data.y})));
-    console.log(this.getDataWithTimeRange(1, 2, data => data.ts));
-    console.log(this.getDataWithTimeRange(25, 100, data => ([data.x, data.y])));
+    console.log(this.getTsRangeData(0, 0, data => ([data.x, data.y])));
+    console.log(this.get16DivideData(0, 0));
+    console.log(this.getTsRangeData(1, 1, data => ([data.x, data.y])));
+    console.log(this.get16DivideData(1, 1));
   },
   methods: {
     async onImgDownButtonClick() {
