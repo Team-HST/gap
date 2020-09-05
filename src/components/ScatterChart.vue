@@ -29,26 +29,26 @@ export default {
             lines: {
               show: true
             }
-          }
+          },
         },
         markers: {
           size: 4
         },
         xaxis: {
+          tickAmount: 5,
           max: 1,
-          tickAmount: 9,
           labels: {
             formatter: function(val) {
-              return parseFloat(val).toFixed(2)
+              return parseFloat(val).toFixed(2);
             }
           }
         },
         yaxis: {
+          tickAmount: 5,
           max: 1,
-          tickAmount: 10,
           labels: {
             formatter: function(val) {
-              return parseFloat(val).toFixed(2)
+              return parseFloat(val).toFixed(2);
             }
           }
         },

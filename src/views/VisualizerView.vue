@@ -62,7 +62,7 @@ export default {
       [dotsPos[0], dotsPos[1], { backgroundColor: '#00FF70' }],
     ],
     value: [],
-    min: 1,
+    min: 0,
     max: 0,
     scatter: {
       data: []
@@ -72,7 +72,7 @@ export default {
     ...mapGetters(['getData', 'getTsRangeData', 'get16DivideData'])
   },
   created() {
-    this.value = [this.getData[0].ts, this.getData[this.getData.length-1].ts]
+    this.value = [0, this.getData[this.getData.length-1].ts]
     this.max = this.getData[this.getData.length-1].ts;
     this.setScatterData();
     console.log(this.getTsRangeData(0, 0, data => ([data.x, data.y])));
