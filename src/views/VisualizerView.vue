@@ -3,18 +3,20 @@
     class="analysisArea text-center"
   >
     <div ref="heatMap">
-      <HeatMap
+      <ScatterChart 
+        :data="scatter.data"
+      />
+      <!-- <HeatMap
         :data="(this.getData) ? this.getData: []"
         :options="options"
-      />
+      /> -->
     </div>
     <v-row>
       <v-col cols="2"></v-col>
       <v-col cols="8">
-        <VueSlider v-model="value" :process="processOptions" @drag-end="onChangeSlider" />
+        <VueSlider v-model="value" :process="processOptions" :min="min" :max="max" @drag-end="onChangeSlider" />
       </v-col>
     </v-row>
-    <ScatterChart />
     <v-row>
       <v-col cols="2"></v-col>
       <v-col cols="8">
@@ -46,33 +48,33 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import HeatMap from '../components/HeatMap';
 import ScatterChart from '../components/ScatterChart';
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/antd.css';
 
 export default {
   components: {
-    HeatMap,
     VueSlider,
     ScatterChart
   },
-  props: {
-    data: Array,
-  },
   data: () => ({
-    options: {
-      backgroundColor: "#FBFBEF"
-    },
     processOptions: dotsPos => [
       [dotsPos[0], dotsPos[1], { backgroundColor: '#00FF70' }],
     ],
-    value: [0, 100]
+    value: [],
+    min: 1,
+    max: 0,
+    scatter: {
+      data: []
+    }
   }),
   computed: {
     ...mapGetters(['getData', 'getTsRangeData', 'get16DivideData'])
   },
   created() {
+    this.value = [this.getData[0].ts, this.getData[this.getData.length-1].ts]
+    this.max = this.getData[this.getData.length-1].ts;
+    this.setScatterData();
     console.log(this.getTsRangeData(0, 0, data => ([data.x, data.y])));
     console.log(this.get16DivideData(0, 0));
     console.log(this.getTsRangeData(1, 1, data => ([data.x, data.y])));
@@ -119,7 +121,10 @@ export default {
    * @todo 변경 판단 후 차트 렌더링
    */
     onChangeSlider() {
-      console.log(this.value);
+      this.setScatterData();
+    },
+    setScatterData() {
+      this.scatter.data = this.getTsRangeData(this.value[0], this.value[1], data => ([data.x, data.y]));
     }
   }
 }

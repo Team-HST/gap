@@ -126,7 +126,7 @@ export default {
       document.getElementsByClassName("black-overlay")[0].style.display = "none";
       this.setData(result);
       this.$router.push({
-        name: 'VisualizerView', 
+        name: 'VisualizerView',
       });
     }
   }

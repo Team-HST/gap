@@ -1,5 +1,5 @@
 <template>
-    <apexchart width="500" type="scatter" :options="options" :series="series" :zoom="zoom"></apexchart>
+    <apexchart width="550" height="500" type="scatter" :options="options" :series="getSeries"></apexchart>
 </template>
 
 <script>
@@ -11,12 +11,14 @@ export default {
   },
   name: 'ScatterChart',
   props: {
-    // options: Object || null,
-    // data: Array
+    data: Array
   },
   data: function () {
     return {
       options: {  
+        title: {
+          text: 'Scatter Chart'
+        },
         grid: {
           xaxis: {
             lines: {
@@ -28,10 +30,13 @@ export default {
               show: true
             }
           }
-        },   
+        },
+        markers: {
+          size: 4
+        },
         xaxis: {
           max: 1,
-          tickAmount: 8,
+          tickAmount: 9,
           labels: {
             formatter: function(val) {
               return parseFloat(val).toFixed(2)
@@ -40,20 +45,38 @@ export default {
         },
         yaxis: {
           max: 1,
-          tickAmount: 8,
+          tickAmount: 10,
           labels: {
             formatter: function(val) {
               return parseFloat(val).toFixed(2)
             }
           }
-        }},
-      series: [{
-        name: 'aaa',
-        data: [[0.123, 0.7], [0.7112, 0.33], [0.1, 0.5], [0.522222, 0.51111]]
-      }],
-      zoom: {
-        type: "xy"
+        },
+        chart: {
+          type: 'scatter',
+          zoom: {
+            enabled: false
+          },
+          animations: {
+            enabled: false,
+          },
+          toolbar: {
+            export: {
+              csv: {
+                filename: `scatter_${this.$moment().format('YYYY-MM-DD hh:mm:ss')}`
+              }
+            }
+          }
+        }
       }
+    }
+  },
+  computed: {
+    getSeries() {
+      return [{
+        name: 'scatter',
+        data: this.data
+      }];
     }
   }
 }
