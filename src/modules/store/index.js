@@ -9,11 +9,15 @@ export default new Vuex.Store({
     createPersistedState()
   ],
   state: {
-    data: [] // 분석결과 데이터
+    data: [], // 분석결과 데이터,
+    heatMapData: []
   },
   getters: {
     getData: (state) => {
       return state.data;
+    },
+    getHeatMapData: (state) => {
+      return state.heatMapData;
     },
     getTsRangeData: (state) => (min, max, mapper) => {
       const result = [];
@@ -34,7 +38,8 @@ export default new Vuex.Store({
       for (let row of getters.getTsRangeData(min, max)) {
         let xIdx = Math.max(0, Math.ceil(row.x / 0.25) - 1); 
         let yIdx = Math.max(0, Math.ceil(row.y / 0.25) - 1);
-        result[xIdx][yIdx] = result[xIdx][yIdx] + 1;
+        // result[xIdx][yIdx] = result[xIdx][yIdx] + 1;
+        result[yIdx][xIdx] = result[yIdx][xIdx] + 1;
       }
       return result;
     }
@@ -42,6 +47,9 @@ export default new Vuex.Store({
   mutations: {
     setData: (state, data) => {
       state.data = data;
+    },
+    setHeatMapData: (state, heatMapData) => {
+      state.heatMapData = heatMapData;
     }
   }
 })

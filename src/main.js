@@ -5,11 +5,13 @@ import vuetify from './plugins/vuetify';
 import router from '@/modules/router';
 import store from '@/modules/store'
 import heatmapjsVue from 'heatmapjs-vue';
+import heatmap from 'vue-heatmapjs';
 import VueHtml2Canvas from 'vue-html2canvas';
 import moment from 'moment';
 
 Vue.config.productionTip = false
 Vue.use(heatmapjsVue);
+Vue.use(heatmap);
 Vue.use(VueHtml2Canvas);
 Vue.prototype.$moment = moment;
 

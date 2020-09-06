@@ -3,9 +3,18 @@
     class="analysisArea text-center"
   >
     <div ref="heatMap">
-      <ScatterChart 
-        :data="scatter.data"
-      />
+      <v-row>
+        <v-col cols="6">
+          <ScatterChart 
+            :data="scatter.data"
+          />
+        </v-col>
+        <v-col cols="6">
+          <HeatMapChart
+            :data="heatMapData.data"
+          />
+        </v-col>
+      </v-row>
       <!-- <HeatMap
         :data="(this.getData) ? this.getData: []"
         :options="options"
@@ -14,7 +23,7 @@
     <v-row>
       <v-col cols="2"></v-col>
       <v-col cols="8">
-        <VueSlider v-model="value" :process="processOptions" :min="min" :max="max" @drag-end="onChangeSlider" />
+        <VueSlider v-model="value" :process="processOptions" :min="min" :max="max" @drag-end="onChangeSlider" :tooltip="'always'" />
       </v-col>
     </v-row>
     <v-row>
@@ -49,13 +58,16 @@
 <script>
 import { mapGetters } from 'vuex';
 import ScatterChart from '../components/ScatterChart';
+import HeatMapChart from '../components/HeatMapChart';
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/antd.css';
+import { mapMutations } from 'vuex';
 
 export default {
   components: {
     VueSlider,
-    ScatterChart
+    ScatterChart,
+    HeatMapChart
   },
   data: () => ({
     processOptions: dotsPos => [
@@ -64,7 +76,11 @@ export default {
     value: [],
     min: 0,
     max: 0,
+    totLength: 0,
     scatter: {
+      data: []
+    },
+    heatMapData: {
       data: []
     }
   }),
@@ -72,15 +88,14 @@ export default {
     ...mapGetters(['getData', 'getTsRangeData', 'get16DivideData'])
   },
   created() {
+    this.totLength = this.getData.length;
     this.value = [0, this.getData[this.getData.length-1].ts]
     this.max = this.getData[this.getData.length-1].ts;
     this.setScatterData();
-    console.log(this.getTsRangeData(0, 0, data => ([data.x, data.y])));
-    console.log(this.get16DivideData(0, 0));
-    console.log(this.getTsRangeData(1, 1, data => ([data.x, data.y])));
-    console.log(this.get16DivideData(1, 1));
+    this.setMapData();
   },
   methods: {
+    ...mapMutations(['setHeatMapData']),
     async onImgDownButtonClick() {
       const el = this.$refs['heatMap'];
       const options = {
@@ -122,9 +137,27 @@ export default {
    */
     onChangeSlider() {
       this.setScatterData();
+      this.setMapData();
     },
     setScatterData() {
       this.scatter.data = this.getTsRangeData(this.value[0], this.value[1], data => ([data.x, data.y]));
+    },
+    setMapData() {
+      for (let i=1; i<=4; i++) {
+        let yaxis = i * 0.25;
+        const arrayTemplate = [];
+
+        for (let j=1; j<=4; j++) {
+          let xaxis = j * 0.25;
+          const row = this.get16DivideData(this.min, this.max, data => ([data.x, data.y]))[i-1][j-1];
+          const dataTemplate = {
+            x: xaxis + '',
+            y: row > 0 ? Math.round(row/this.totLength * 100) : 0
+          };
+          arrayTemplate.push(dataTemplate);
+        }
+        this.heatMapData.data.push({name: yaxis, data: arrayTemplate});
+      }
     }
   }
 }

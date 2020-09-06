@@ -73,6 +73,7 @@ export default {
   },
   computed: {
     getSeries() {
+      console.log(this.data);
       return [{
         name: 'scatter',
         data: this.data

@@ -5,13 +5,13 @@
       elevation="12"
       width="800"
     >
-      <heatmapjsVue
+      <div v-heatmap
         id="heatmapContainer"
         class="heatmapjs-container"
         :min=0
         :max="data.length"
         :options="options"
-        :data="data"
+        :heatmapPreload="data"
       />
     
       <v-card
