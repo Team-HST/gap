@@ -4,14 +4,14 @@
   >
     <div ref="heatMap">
       <v-row>
-        <v-col cols="6">
+        <v-col cols="6" align="right">
           <ScatterChart 
-            :data="scatter.data"
+              :data="scatter.data"
           />
         </v-col>
-        <v-col cols="6">
+        <v-col cols="6" align="left">
           <HeatMapChart
-            :data="heatMapData.data"
+              :data="heatMapData.data"
           />
         </v-col>
       </v-row>
@@ -20,11 +20,12 @@
         :options="options"
       /> -->
     </div>
-    <v-row>
-      <v-col cols="2"></v-col>
-      <v-col cols="8">
+    <v-row class="mt-5">
+      <v-col cols="3"></v-col>
+      <v-col cols="6">
         <VueSlider v-model="value" :process="processOptions" :min="min" :max="max" @drag-end="onChangeSlider" :tooltip="'always'" />
       </v-col>
+      <v-col cols="3"></v-col>
     </v-row>
     <v-row>
       <v-col cols="2"></v-col>
@@ -143,16 +144,18 @@ export default {
       this.scatter.data = this.getTsRangeData(this.value[0], this.value[1], data => ([data.x, data.y]));
     },
     setMapData() {
+      this.heatMapData.data = []; // 초기화
+      let totalLength = this.get16DivideData(this.value[0], this.value[1], data => ([data.x, data.y])).total;
       for (let i=1; i<=4; i++) {
         let yaxis = i * 0.25;
         const arrayTemplate = [];
 
         for (let j=1; j<=4; j++) {
           let xaxis = j * 0.25;
-          const row = this.get16DivideData(this.min, this.max, data => ([data.x, data.y]))[i-1][j-1];
+          const row = this.get16DivideData(this.value[0], this.value[1], data => ([data.x, data.y])).data[i-1][j-1];
           const dataTemplate = {
             x: xaxis + '',
-            y: row > 0 ? Math.round(row/this.totLength * 100) : 0
+            y: row > 0 ? Math.round(row/totalLength * 100) : 0
           };
           arrayTemplate.push(dataTemplate);
         }

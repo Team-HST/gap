@@ -39,7 +39,6 @@ export default new Vuex.Store({
       for (let row of sourceData) {
         let xIdx = Math.max(0, Math.ceil(row.x / 0.25) - 1); 
         let yIdx = Math.max(0, Math.ceil(row.y / 0.25) - 1);
-        // result[xIdx][yIdx] = result[xIdx][yIdx] + 1;
         result[yIdx][xIdx] = result[yIdx][xIdx] + 1;
       }
       return {

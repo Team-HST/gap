@@ -25,35 +25,70 @@ export default {
                     animations: {
                         enabled: false,
                     },
-                     toolbar: {
+                    toolbar: {
                         export: {
                             csv: {
-                                filename: `scatter_${this.$moment().format('YYYY-MM-DD hh:mm:ss')}`
-                            }
+                                filename: `heatMap_${this.$moment().format('YYYY-MM-DD hh:mm:ss')}`
+                            }                            
                         }
                     }
                 },
                 dataLabels: {
-                    textAnchor: 'middle',
+                    // textAnchor: 'middle',
                     formatter: function(val) {
                         return val + "%";
+                    },
+                    style: {
+                        colors: ['#000000']
                     }
                 },
-                colors: ["#008FFB"],
+                colors: ['#1DDB16'],
                 title: {
                     text: 'HeatMap Chart'
                 },
-                yaxis: {
+                xaxis: {
                     labels: {
-                        align: 'left'
+                        offsetX: 21,
+                        offsetY: 0
                     }
+                },
+                yaxis: {
+                    tickAmount: 20,
+                    labels: {
+                        show: true,
+                        align: 'right',
+                        minHeight: 550,
+                        maxHeight: 550,
+                        maxWidth: 160,
+                        offsetX: 0,
+                        offsetY: 21
+                    },
+                    style: {
+                        fontSize: '15px',
+                        fontWeight: 700
+                    },
+                    /*
+                    axisBorder: {
+                        show: true,
+                        color: '#78909C',
+                        offsetX: 0,
+                        offsetY: 0
+                    },
+                    axisTicks: {
+                        show: true,
+                        borderType: 'solid',
+                        color: '#78909C',
+                        width: 500,
+                        offsetX: 500,
+                        offsetY: 0
+                    },
+                    */
                 }
             }
         }
     },
     computed: {
         getSeries() {
-            console.log(this.data);
             return [
                 {
                     name: this.data[0].name,
