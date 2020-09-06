@@ -83,7 +83,6 @@ export default {
       fileReader.readAsText(e.target.files[0]);
     },
     beforeAnalyze() {
-      console.log('before analyze');
       document.getElementsByClassName("black-overlay")[0].style.display = "block";
       this.loading = true
     },
@@ -110,9 +109,6 @@ export default {
           // ignore
         }
       }
-      // result = result.sort((a, b) => a.ts - b.ts);
-      
-      console.log('result: ' + JSON.stringify(result));
       setTimeout(() => {
         this.afterAnalyze(result);
       }, 1000)
@@ -121,7 +117,6 @@ export default {
       data.ts = Math.ceil((data.ts - normalizer) / 1000000);
     },
     afterAnalyze(result) {
-      console.log('after analyze');
       this.loading = false;
       document.getElementsByClassName("black-overlay")[0].style.display = "none";
       this.setData(result);

@@ -35,13 +35,17 @@ export default new Vuex.Store({
         [0, 0, 0, 0], 
         [0, 0, 0, 0]
       ];
-      for (let row of getters.getTsRangeData(min, max)) {
+      const sourceData = getters.getTsRangeData(min, max);
+      for (let row of sourceData) {
         let xIdx = Math.max(0, Math.ceil(row.x / 0.25) - 1); 
         let yIdx = Math.max(0, Math.ceil(row.y / 0.25) - 1);
         // result[xIdx][yIdx] = result[xIdx][yIdx] + 1;
         result[yIdx][xIdx] = result[yIdx][xIdx] + 1;
       }
-      return result;
+      return {
+        total: sourceData.length,
+        data: result
+      };
     }
   },
   mutations: {
