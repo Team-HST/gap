@@ -74,7 +74,7 @@ export default {
   computed: {
     getSeries() {
       return [{
-        name: 'scatter',
+        name: 'Y',
         data: this.data
       }];
     }
