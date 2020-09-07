@@ -35,7 +35,7 @@ export default {
           size: 4
         },
         xaxis: {
-          tickAmount: 5,
+          tickAmount: 4,
           max: 1,
           labels: {
             formatter: function(val) {
@@ -44,7 +44,7 @@ export default {
           }
         },
         yaxis: {
-          tickAmount: 5,
+          tickAmount: 4,
           max: 1,
           labels: {
             formatter: function(val) {

@@ -40,7 +40,7 @@
         <v-icon left>mdi-backspace</v-icon>
           뒤로가기
         </v-btn>
-        <v-btn
+        <!-- <v-btn
           class="ml-5 white--text"
           color="grey darken-1"
           depressed
@@ -49,7 +49,7 @@
         >
         <v-icon left>mdi-download</v-icon>
         분석결과 이미지 다운로드
-        </v-btn>
+        </v-btn> -->
       </v-col>
       <v-col cols="2"></v-col>
     </v-row>
