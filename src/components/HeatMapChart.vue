@@ -48,8 +48,8 @@ export default {
                 },
                 xaxis: {
                     labels: {
-                        offsetX: 21,
-                        offsetY: 0
+                        // offsetX: 21,
+                        // offsetY: 0
                     }
                 },
                 yaxis: {
@@ -61,7 +61,7 @@ export default {
                         maxHeight: 550,
                         maxWidth: 160,
                         offsetX: 0,
-                        offsetY: 21
+                        // offsetY: 21
                     },
                     style: {
                         fontSize: '15px',

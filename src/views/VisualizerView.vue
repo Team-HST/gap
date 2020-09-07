@@ -147,11 +147,11 @@ export default {
       this.heatMapData.data = []; // 초기화
       let totalLength = this.get16DivideData(this.value[0], this.value[1], data => ([data.x, data.y])).total;
       for (let i=1; i<=4; i++) {
-        let yaxis = i * 0.25;
+        let yaxis = i;
         const arrayTemplate = [];
 
         for (let j=1; j<=4; j++) {
-          let xaxis = j * 0.25;
+          let xaxis = j;
           const row = this.get16DivideData(this.value[0], this.value[1], data => ([data.x, data.y])).data[i-1][j-1];
           const dataTemplate = {
             x: xaxis + '',
