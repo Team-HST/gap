@@ -1,5 +1,5 @@
 <template>
-    <apexchart type="heatmap" width="550" height="500" :options="heatMapOptions" :series="getSeries"></apexchart>
+    <apexchart type="heatmap" width="550" height="520" :options="heatMapOptions" :series="getSeries"></apexchart>
 </template>
 
 <script>
@@ -39,6 +39,8 @@ export default {
                         return val + "%";
                     },
                     style: {
+                        fontSize: '20px',
+                        fontFamily: 'Kopub 돋움체 medium',
                         colors: ['#000000']
                     }
                 },
@@ -50,7 +52,12 @@ export default {
                     labels: {
                         // offsetX: 21,
                         // offsetY: 0
-                    }
+                        style: {
+                            fontSize: '20px',
+                            fontFamily: 'Kopub 돋움체 medium',
+                            fontWeight: 700
+                        }
+                    },
                 },
                 yaxis: {
                     tickAmount: 20,
@@ -60,12 +67,11 @@ export default {
                         minHeight: 550,
                         maxHeight: 550,
                         maxWidth: 160,
-                        offsetX: 0,
-                        // offsetY: 21
-                    },
-                    style: {
-                        fontSize: '15px',
-                        fontWeight: 700
+                        style: {
+                            fontSize: '20px',
+                            fontFamily: 'Kopub 돋움체 medium',
+                            fontWeight: 700
+                        }
                     },
                     /*
                     axisBorder: {

@@ -1,5 +1,5 @@
 <template>
-    <apexchart width="550" height="500" type="scatter" :options="options" :series="getSeries"></apexchart>
+    <apexchart width="550" height="520" type="scatter" :options="options" :series="getSeries"></apexchart>
 </template>
 
 <script>
@@ -40,6 +40,11 @@ export default {
           labels: {
             formatter: function(val) {
               return parseFloat(val).toFixed(2);
+            },
+            style: {
+                fontSize: '20px',
+                fontFamily: 'Kopub 돋움체 medium',
+                fontWeight: 700
             }
           }
         },
@@ -49,6 +54,11 @@ export default {
           labels: {
             formatter: function(val) {
               return parseFloat(val).toFixed(2);
+            },
+            style: {
+                fontSize: '20px',
+                fontFamily: 'Kopub 돋움체 medium',
+                fontWeight: 700
             }
           }
         },
