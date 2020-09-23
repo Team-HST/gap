@@ -46,7 +46,7 @@ export default {
                 },
                 colors: ['#1DDB16'],
                 title: {
-                    text: 'HeatMap Chart'
+                    text: ''
                 },
                 xaxis: {
                     labels: {
@@ -58,6 +58,7 @@ export default {
                             fontWeight: 700
                         }
                     },
+                    position: 'top'
                 },
                 yaxis: {
                     tickAmount: 20,

@@ -101,7 +101,7 @@ export default {
             normalizer = ts;
           }
           if (pos && ts) {
-            const viewData = {ts, x: pos[0], y: pos[1], value: 1};
+            const viewData = {ts, x: pos[0], y: 1-pos[1], value: 1};
             this.normalizeTimestamp(viewData, normalizer);
             result.push(viewData);
           }

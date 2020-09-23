@@ -17,7 +17,7 @@ export default {
     return {
       options: {  
         title: {
-          text: 'Scatter Chart'
+          text: ''
         },
         grid: {
           xaxis: {
@@ -46,14 +46,15 @@ export default {
                 fontFamily: 'Kopub 돋움체 medium',
                 fontWeight: 700
             }
-          }
+          },
+          position: 'top'
         },
         yaxis: {
           tickAmount: 4,
           max: 1,
           labels: {
             formatter: function(val) {
-              return parseFloat(val).toFixed(2);
+              return parseFloat(1-val).toFixed(2);
             },
             style: {
                 fontSize: '20px',
